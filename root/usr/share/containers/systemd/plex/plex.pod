@@ -1,0 +1,7 @@
+[Unit]
+Description=plex
+
+[Pod]
+PodName=plex
+Network=media.network
+NetworkAlias=plex

@@ -1,0 +1,4 @@
+ingress:
+  - service: http://qbittorrent:9092
+    originRequest:
+      access: *cf_access

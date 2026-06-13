@@ -1,0 +1,21 @@
+[Unit]
+Description=nas-healthchecks (disk-space pinger)
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/nas-healthchecks:102
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=healthchecks
+Volume=/mnt/data/healthchecks:/config
+# PING_URL=https://hc-ping.com/...
+EnvironmentFile=/run/healthchecks/env
+Environment=DF_HIGHWATERMARK=90
+Environment=DF_FILESYSTEMS=/dev/sda1,/dev/sdb1
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

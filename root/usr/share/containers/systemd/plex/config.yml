@@ -1,0 +1,6 @@
+ingress:
+  - path: ^/files
+    service: http://localhost:8334
+    originRequest:
+      access: *cf_access
+  - service: http://localhost:32400

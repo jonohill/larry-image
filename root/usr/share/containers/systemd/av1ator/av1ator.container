@@ -1,0 +1,17 @@
+[Unit]
+Description=av1ator (AV1 transcoder)
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/av1ator:5
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=av1ator
+Volume=/mnt/data/tmp/sorted-media:/input
+Volume=/mnt/data/tmp/plex-media:/output
+Exec=--crf 26 --preset 6 --delete-input --min-size 500MB --max-width 1920 --skip-codec av1 --passthrough-filtered --nice 10
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

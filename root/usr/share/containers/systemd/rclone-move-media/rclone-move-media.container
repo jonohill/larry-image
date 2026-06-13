@@ -1,0 +1,27 @@
+[Unit]
+Description=rclone-move-media (uploads transcoded media, refreshes plex)
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/rclone-move:144
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=rclone_move_media
+Network=media.network
+Volume=/mnt/data/tmp/plex-media:/source
+Volume=/mnt/data/rclone_move_media:/config
+Environment=SOURCE=/source
+Environment=DEST=jotta:/plex-media
+Environment=PLEX_PREFIX=/data/plex-media
+Environment=PLEX_URL=http://plex:32400
+# PLEX_TOKEN=...
+EnvironmentFile=/run/rclone-move-media/env
+Environment=RCLONE_EXTRA_FLAGS=--exclude,*.part.*
+Exec=--metrics-addr :9090
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "timezone": "Pacific/Auckland",
+  "labels": ["dependencies"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update container images in Podman Quadlet units",
+      "managerFilePatterns": [
+        "/(^|/)containers/systemd/.+\\.(container|image)$/"
+      ],
+      "matchStrings": [
+        "Image=(?<depName>[^:@\\s]+)(?::(?<currentValue>[^@\\s]+))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "linuxserver.io images use date-style tags, not semver",
+      "matchPackageNames": ["lscr.io/linuxserver/**"],
+      "versioning": "loose"
+    }
+  ]
+}

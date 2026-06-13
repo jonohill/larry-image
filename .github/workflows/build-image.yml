@@ -1,0 +1,68 @@
+name: Build image
+on: [push]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+  IMAGE: ${{ github.event.repository.name }}
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-24.04-arm
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build image
+      uses: redhat-actions/buildah-build@v2
+      with:
+        image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+        tags: |
+          latest
+          ${{ github.run_number }}
+        containerfiles: |
+          ./Containerfile
+
+    - name: Push image
+      uses: redhat-actions/push-to-registry@v2
+      if: github.ref == 'refs/heads/main'
+      with:
+        registry: ${{ env.REGISTRY }}
+        image: ${{ env.IMAGE }}
+        tags: |
+          latest
+          ${{ github.run_number }}
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+
+    - name: Build QCOW2
+      if: github.ref == 'refs/heads/main'
+      env:
+        IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{ github.run_number }}
+      run: |
+        mkdir -p output
+        sudo podman pull $IMAGE
+        sudo podman run \
+          --rm \
+          --privileged \
+          --pull=newer \
+          --security-opt label=type:unconfined_t \
+          -v ./output:/output \
+          -v ./config.toml:/config.toml:ro \
+          -v /var/lib/containers/storage:/var/lib/containers/storage \
+          quay.io/centos-bootc/bootc-image-builder:latest \
+          --type qcow2 \
+          $IMAGE
+        find output
+
+    - name: Upload QCOW2 artifact
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v4
+      with:
+        name: larry-qcow2-${{ github.run_number }}
+        path: output/qcow2/disk.qcow2
+        retention-days: 30

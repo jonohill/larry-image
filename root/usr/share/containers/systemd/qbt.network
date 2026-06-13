@@ -1,0 +1,5 @@
+[Unit]
+Description=Isolated network for qbittorrent and its cloudflared tunnel
+
+[Network]
+NetworkName=qbt

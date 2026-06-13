@@ -1,0 +1,13 @@
+# Persistent data volume for larry's container workloads.
+#
+[Unit]
+Description=Data volume (/mnt/data)
+
+[Mount]
+What=/dev/disk/by-label/data
+Where=/mnt/data
+Type=ext4
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target

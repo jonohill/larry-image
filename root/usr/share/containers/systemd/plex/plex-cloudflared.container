@@ -1,0 +1,21 @@
+[Unit]
+Description=plex cloudflared tunnel
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:2026.5.2
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=plex.pod
+Environment=TZ=Pacific/Auckland
+EnvironmentFile=/run/plex-cloudflared/env
+Volume=/run/plex-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+SecurityLabelDisable=true
+Exec=tunnel run
+
+[Service]
+Restart=always
+ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/plex-cloudflared/tunnel.yml /usr/share/containers/systemd/plex/config.yml > /run/plex-cloudflared/config.yml'
+
+[Install]
+WantedBy=multi-user.target

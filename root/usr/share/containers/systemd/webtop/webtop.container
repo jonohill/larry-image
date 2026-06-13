@@ -1,0 +1,23 @@
+[Unit]
+Description=webtop
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=lscr.io/linuxserver/webtop:fedora-kde
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=webtop.pod
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=Pacific/Auckland
+Volume=/mnt/data/webtop:/config
+AddDevice=/dev/fuse
+AddCapability=SYS_ADMIN
+SecurityLabelDisable=true
+PodmanArgs=--security-opt seccomp=unconfined
+ShmSize=1g
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

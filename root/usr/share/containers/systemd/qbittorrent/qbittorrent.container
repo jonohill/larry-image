@@ -1,0 +1,37 @@
+[Unit]
+Description=qbittorrent (behind WireGuard VPN)
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/nas-qbt:103
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=qbittorrent
+# Deliberately NOT pod-grouped with its cloudflared tunnel: this container runs
+# a WireGuard VPN with a killswitch in its own netns. The tunnel must reach the
+# WebUI from outside that netns (over qbt.network as http://qbittorrent:9092) —
+# co-locating it in a pod would push the tunnel's own egress through the VPN.
+Network=qbt.network
+PublishPort=9092:9092
+Environment=TZ=Pacific/Auckland
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=VPN_ENABLED=true
+Environment=VPN_CONF=wg0
+Environment=VPN_IP_CHECK_DELAY=5
+Environment=PRIVOXY_ENABLED=false
+Environment=WEBUI_PORTS=9092/tcp
+Volume=/mnt/data/downloads-incomplete:/downloads-incomplete
+Volume=/mnt/data/downloads:/downloads
+# WireGuard config (wg0.conf) lives in this host data dir, not in the image.
+Volume=/mnt/data/qbt:/config
+AddCapability=NET_ADMIN
+# WireGuard needs /dev/net/tun
+AddDevice=/dev/net/tun
+Sysctl=net.ipv4.conf.all.src_valid_mark=1
+Sysctl=net.ipv6.conf.all.disable_ipv6=0
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

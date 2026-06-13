@@ -1,0 +1,6 @@
+ingress:
+  - service: https://localhost:3001
+    originRequest:
+      # webtop serves HTTPS with a self-signed cert
+      noTLSVerify: true
+      access: *cf_access

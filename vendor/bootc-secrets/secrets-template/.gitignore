@@ -1,0 +1,6 @@
+# Secrets now live in the object store, not git. Keep only metadata locally;
+# never commit plaintext secrets or the encrypted blob.
+*
+!*/
+!.gitignore
+!*.md

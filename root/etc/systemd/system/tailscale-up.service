@@ -1,0 +1,15 @@
+[Unit]
+Description=Bring this host onto the tailnet (one-time bootstrap auth)
+Wants=network-online.target tailscaled.service
+After=network-online.target tailscaled.service download-secrets.service
+# Note: ordered After=download-secrets but NOT Requires=. The script no-ops if
+# the secret is absent or the node is already registered, so a transient
+# secrets-fetch failure must not wedge tailscale on an already-joined host.
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/local/sbin/tailscale-up.sh
+
+[Install]
+WantedBy=multi-user.target

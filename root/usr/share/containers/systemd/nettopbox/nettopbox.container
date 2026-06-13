@@ -1,0 +1,17 @@
+[Unit]
+Description=nettopbox (NZ IPTV)
+
+[Container]
+Image=ghcr.io/jonohill/nettopbox:0.2.0
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=nettopbox
+Network=media.network
+Environment=NTB_IPTV_URL=https://i.mjh.nz/nz/raw-tv.m3u8
+Environment=NTB_BASE_URL=http://nettopbox:8080
+Environment=https_proxy=http://100.116.133.99:3128
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

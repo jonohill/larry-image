@@ -1,0 +1,16 @@
+[Unit]
+Description=nettopbox (AU IPTV, Sydney)
+
+[Container]
+Image=ghcr.io/jonohill/nettopbox:0.2.0
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=nettopbox_au
+Network=media.network
+Environment=NTB_IPTV_URL=https://i.mjh.nz/au/Sydney/raw-tv.m3u8
+Environment=NTB_BASE_URL=http://nettopbox_au:8080
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

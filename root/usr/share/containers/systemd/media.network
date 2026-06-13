@@ -1,0 +1,5 @@
+[Unit]
+Description=Network for the plex media workloads
+
+[Network]
+NetworkName=media

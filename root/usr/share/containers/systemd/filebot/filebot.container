@@ -1,0 +1,20 @@
+[Unit]
+Description=filebot (renames/sorts downloads)
+RequiresMountsFor=/mnt/data
+
+[Container]
+Image=docker.io/jonoh/nas-filebot:v0.0.60
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+ContainerName=filebot
+ShmSize=256m
+Environment=TZ=Pacific/Auckland
+Environment=LANG=C.UTF-8
+Volume=/mnt/data/filebot:/config
+Volume=/mnt/data/downloads:/input
+Volume=/mnt/data/tmp/sorted-media:/output
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

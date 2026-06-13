@@ -1,0 +1,21 @@
+# Example Quadlet container. Rename to `example.container` to activate, then
+# adjust image/ports/secrets to taste. Delete once you have real units.
+[Unit]
+Description=Example service
+# Only needed if this service consumes decrypted secrets:
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Container]
+Image=ghcr.io/example/app:1.0.0
+# Required on a read-only bootc image so Podman can find the baked-in image:
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+PublishPort=8080:8080
+# Secrets decrypted to /run by download-secrets.service:
+EnvironmentFile=/run/example/env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
