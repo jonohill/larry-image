@@ -27,6 +27,7 @@ Volume=/mnt/data/qbt:/config
 AddCapability=NET_ADMIN
 # WireGuard needs /dev/net/tun
 AddDevice=/dev/net/tun
+SecurityLabelDisable=true
 Sysctl=net.ipv4.conf.all.src_valid_mark=1
 Sysctl=net.ipv6.conf.all.disable_ipv6=0
 

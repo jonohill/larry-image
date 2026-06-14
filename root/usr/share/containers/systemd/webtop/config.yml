@@ -1,3 +1,4 @@
+credentials-file: /etc/cloudflared/credentials.json
 ingress:
   - service: https://localhost:3001
     originRequest:

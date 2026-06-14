@@ -8,14 +8,16 @@ Image=docker.io/cloudflare/cloudflared:2026.5.2
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Pod=webtop.pod
 Environment=TZ=Pacific/Auckland
-EnvironmentFile=/run/webtop-cloudflared/env
 Volume=/run/webtop-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/webtop-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
 SecurityLabelDisable=true
 Exec=tunnel run
 
 [Service]
 Restart=always
+EnvironmentFile=/run/webtop-cloudflared/env
 ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/webtop-cloudflared/tunnel.yml /usr/share/containers/systemd/webtop/config.yml > /run/webtop-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/webtop-cloudflared/credentials.json'
 
 [Install]
 WantedBy=multi-user.target

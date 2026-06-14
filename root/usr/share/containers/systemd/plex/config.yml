@@ -1,3 +1,4 @@
+credentials-file: /etc/cloudflared/credentials.json
 ingress:
   - path: ^/files
     service: http://localhost:8334

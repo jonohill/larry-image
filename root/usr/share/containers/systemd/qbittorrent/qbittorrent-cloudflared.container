@@ -9,14 +9,16 @@ Image=docker.io/cloudflare/cloudflared:2026.5.2
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Network=qbt.network
 Environment=TZ=Pacific/Auckland
-EnvironmentFile=/run/qbittorrent-cloudflared/env
 Volume=/run/qbittorrent-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/qbittorrent-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
 SecurityLabelDisable=true
 Exec=tunnel run
 
 [Service]
 Restart=always
+EnvironmentFile=/run/qbittorrent-cloudflared/env
 ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/qbittorrent-cloudflared/tunnel.yml /usr/share/containers/systemd/qbittorrent/config.yml > /run/qbittorrent-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/qbittorrent-cloudflared/credentials.json'
 
 [Install]
 WantedBy=multi-user.target

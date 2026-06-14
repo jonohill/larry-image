@@ -1,3 +1,4 @@
+credentials-file: /etc/cloudflared/credentials.json
 ingress:
   - service: http://qbittorrent:9092
     originRequest:

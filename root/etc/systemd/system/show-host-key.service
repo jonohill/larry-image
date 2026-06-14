@@ -1,0 +1,18 @@
+[Unit]
+Description=Print SSH host public key and secrets-blob path to the console
+# Order after host-key generation so the key exists; the script also generates
+# it (ssh-keygen -A) and waits, so this is best-effort ordering, not a hard dep.
+After=sshd-keygen.target
+Wants=sshd-keygen.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/local/sbin/show-host-key.sh
+# Land on the journal AND the console (the Oracle serial console) so the key is
+# readable without any prior access to the box.
+StandardOutput=journal+console
+StandardError=journal+console
+
+[Install]
+WantedBy=multi-user.target

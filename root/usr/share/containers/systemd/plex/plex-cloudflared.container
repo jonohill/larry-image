@@ -8,14 +8,16 @@ Image=docker.io/cloudflare/cloudflared:2026.5.2
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Pod=plex.pod
 Environment=TZ=Pacific/Auckland
-EnvironmentFile=/run/plex-cloudflared/env
 Volume=/run/plex-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/plex-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
 SecurityLabelDisable=true
 Exec=tunnel run
 
 [Service]
 Restart=always
+EnvironmentFile=/run/plex-cloudflared/env
 ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/plex-cloudflared/tunnel.yml /usr/share/containers/systemd/plex/config.yml > /run/plex-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/plex-cloudflared/credentials.json'
 
 [Install]
 WantedBy=multi-user.target

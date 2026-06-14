@@ -7,7 +7,8 @@ Description=Data volume (/mnt/data)
 What=/dev/disk/by-label/data
 Where=/mnt/data
 Type=ext4
-Options=defaults
+# configure selinux for the container user
+Options=defaults,context=system_u:object_r:container_file_t:s0
 
 [Install]
 WantedBy=multi-user.target

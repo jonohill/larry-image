@@ -12,6 +12,9 @@ RUN useradd --create-home --groups wheel jono && \
     chmod 0755 /usr/local/sbin/randomize-passwords.sh && \
     systemctl enable randomize-passwords.service
 
+RUN chmod 0755 /usr/local/sbin/show-host-key.sh && \
+    systemctl enable show-host-key.service
+
 COPY vendor/bootc-secrets/install /tmp/bootc-secrets-install
 RUN /tmp/bootc-secrets-install/install.sh && rm -rf /tmp/bootc-secrets-install
 
