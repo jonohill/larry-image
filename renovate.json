@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":dependencyDashboard"
-  ],
+  "extends": ["config:recommended", ":dependencyDashboard"],
   "timezone": "Pacific/Auckland",
   "labels": ["dependencies"],
   "customManagers": [
@@ -25,5 +22,6 @@
       "matchPackageNames": ["lscr.io/linuxserver/**"],
       "versioning": "loose"
     }
-  ]
+  ],
+  "automerge": true
 }
