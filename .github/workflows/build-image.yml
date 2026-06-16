@@ -38,3 +38,34 @@ jobs:
             ${{ github.run_number }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
+
+  build-test:
+    name: Build test image (no quadlets)
+    runs-on: ubuntu-24.04-arm
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
+          tags: |
+            test
+            test-${{ github.run_number }}
+          build-args: |
+            ENABLE_QUADLETS=0
+          containerfiles: |
+            ./Containerfile
+
+      - name: Push image
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          image: ${{ env.IMAGE }}
+          tags: |
+            test
+            test-${{ github.run_number }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}

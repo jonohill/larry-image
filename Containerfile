@@ -1,5 +1,10 @@
 FROM quay.io/almalinuxorg/almalinux-bootc:10
 
+# Set to 0 to build a test variant with no application quadlets enabled.
+# Tailscale and the base system services remain enabled either way, which
+# lets the networking be tested in isolation.
+ARG ENABLE_QUADLETS=1
+
 COPY root/ /
 
 RUN dnf install -y \
@@ -40,3 +45,10 @@ RUN systemctl enable bootc-fetch-apply-updates.timer
 RUN dnf install -y greenboot && dnf clean all && \
     chmod 0755 /etc/greenboot/check/required.d/*.sh && \
     systemctl enable greenboot-healthcheck.service
+
+# Test variant: strip the application quadlets (and their bound-image links)
+# so nothing but the base system + tailscale starts. Run last so all layers
+# above are shared with the normal image.
+RUN if [ "$ENABLE_QUADLETS" != "1" ]; then \
+        rm -rf /usr/share/containers/systemd/* /usr/lib/bootc/bound-images.d/*; \
+    fi
