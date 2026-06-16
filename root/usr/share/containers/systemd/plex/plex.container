@@ -5,7 +5,7 @@ Requires=download-secrets.service
 RequiresMountsFor=/mnt/data
 
 [Container]
-Image=ghcr.io/hillnz/docker-nas-plex:518
+Image=ghcr.io/hillnz/docker-nas-plex:523
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Pod=plex.pod
 ContainerName=plex
