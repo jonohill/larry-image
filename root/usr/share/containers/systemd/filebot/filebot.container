@@ -1,6 +1,6 @@
 [Unit]
 Description=filebot (renames/sorts downloads)
-RequiresMountsFor=/mnt/data
+RequiresMountsFor=/var/mnt/data
 
 [Container]
 Image=docker.io/jonoh/nas-filebot:v0.0.60

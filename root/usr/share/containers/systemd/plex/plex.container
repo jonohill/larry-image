@@ -2,7 +2,7 @@
 Description=plex
 After=download-secrets.service
 Requires=download-secrets.service
-RequiresMountsFor=/mnt/data
+RequiresMountsFor=/var/mnt/data
 
 [Container]
 Image=ghcr.io/hillnz/docker-nas-plex:518

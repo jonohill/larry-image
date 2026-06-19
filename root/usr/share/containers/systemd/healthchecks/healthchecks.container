@@ -2,7 +2,7 @@
 Description=nas-healthchecks (disk-space pinger)
 After=download-secrets.service
 Requires=download-secrets.service
-RequiresMountsFor=/mnt/data
+RequiresMountsFor=/var/mnt/data
 
 [Container]
 Image=ghcr.io/jonohill/nas-healthchecks:102

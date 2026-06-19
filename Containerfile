@@ -37,7 +37,7 @@ RUN mkdir -p /usr/lib/bootc/bound-images.d && \
         -exec ln -sf -t /usr/lib/bootc/bound-images.d {} +
 
 # data volume
-RUN systemctl enable mnt-data.mount
+RUN systemctl enable var-mnt-data.mount
 
 # daily updates at 3am, reboot if needed
 RUN systemctl enable bootc-fetch-apply-updates.timer

@@ -1,0 +1,17 @@
+# Persistent data volume for larry's container workloads.
+#
+[Unit]
+Description=Data volume (/var/mnt/data)
+
+[Mount]
+What=/dev/disk/by-label/data
+# /mnt is a symlink to /var/mnt on ostree/bootc, so the mount unit must use the
+# canonical path (and be named var-mnt-data.mount to match). Consumers can still
+# reference /mnt/data — systemd canonicalises it and the symlink resolves at runtime.
+Where=/var/mnt/data
+Type=ext4
+# configure selinux for the container user
+Options=defaults,context=system_u:object_r:container_file_t:s0
+
+[Install]
+WantedBy=multi-user.target

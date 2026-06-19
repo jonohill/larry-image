@@ -1,6 +1,6 @@
 [Unit]
 Description=qbittorrent (behind WireGuard VPN)
-RequiresMountsFor=/mnt/data
+RequiresMountsFor=/var/mnt/data
 
 [Container]
 Image=ghcr.io/jonohill/nas-qbt:103

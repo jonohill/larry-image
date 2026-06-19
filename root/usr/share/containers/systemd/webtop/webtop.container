@@ -1,6 +1,6 @@
 [Unit]
 Description=webtop
-RequiresMountsFor=/mnt/data
+RequiresMountsFor=/var/mnt/data
 
 [Container]
 Image=lscr.io/linuxserver/webtop:fedora-kde
