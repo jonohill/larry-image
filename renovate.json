@@ -23,5 +23,6 @@
       "versioning": "loose"
     }
   ],
-  "automerge": true
+  "automerge": true,
+  "platformAutomerge": false
 }
