@@ -24,8 +24,8 @@ Environment=TS_HOSTNAME=plex
 Environment=TS_DRIVE_SHARES=media:/data/plex-media
 Environment=FILESTASH_BASE=/files
 EnvironmentFile=/run/plex/env
-AddHost=id.jottacloud.com:127.0.0.1
-AddHost=jfs.jottacloud.com:127.0.0.1
+# AddHost lives on the pod (plex.pod) -- podman 5 rejects network options on a
+# container that shares a pod's network namespace.
 Volume=/mnt/data/plex:/config
 Volume=/mnt/data/tmp/plex-transcode:/transcode
 Volume=/tmp:/tmp
