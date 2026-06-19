@@ -7,7 +7,11 @@ ARG ENABLE_QUADLETS=1
 
 COPY root/ /
 
-RUN dnf install -y \
+RUN dnf install -y epel-release && \
+    dnf config-manager --set-enabled crb && \
+    dnf install -y \
+        btop \
+        htop \
         jq \
         tar \
     && dnf clean all
