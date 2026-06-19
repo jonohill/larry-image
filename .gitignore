@@ -2,3 +2,5 @@
 /output/
 *.qcow2
 secrets/
+.env
+*.age
