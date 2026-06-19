@@ -12,6 +12,7 @@ RUN dnf install -y epel-release && \
     dnf install -y \
         btop \
         htop \
+        git \
         jq \
         tar \
     && dnf clean all
