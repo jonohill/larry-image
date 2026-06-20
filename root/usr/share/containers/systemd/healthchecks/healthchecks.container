@@ -5,7 +5,7 @@ Requires=download-secrets.service
 RequiresMountsFor=/var/mnt/data
 
 [Container]
-Image=ghcr.io/jonohill/nas-healthchecks:102
+Image=ghcr.io/jonohill/nas-healthchecks:104
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 ContainerName=healthchecks
 Volume=/mnt/data/healthchecks:/config
