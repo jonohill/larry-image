@@ -5,7 +5,7 @@ Requires=download-secrets.service
 Wants=qbittorrent.service
 
 [Container]
-Image=docker.io/cloudflare/cloudflared:2026.5.2
+Image=docker.io/cloudflare/cloudflared:2026.6.1
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Network=qbt.network
 Environment=TZ=Pacific/Auckland
