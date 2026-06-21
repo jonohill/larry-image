@@ -5,7 +5,7 @@ Requires=download-secrets.service
 RequiresMountsFor=/var/mnt/data
 
 [Container]
-Image=ghcr.io/jonohill/rclone-move:144
+Image=ghcr.io/jonohill/rclone-move:146
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 ContainerName=rclone_move_media
 Network=media.network

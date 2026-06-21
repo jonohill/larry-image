@@ -3,7 +3,7 @@ Description=qbittorrent (behind WireGuard VPN)
 RequiresMountsFor=/var/mnt/data
 
 [Container]
-Image=ghcr.io/jonohill/nas-qbt:103
+Image=ghcr.io/jonohill/nas-qbt:105
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 ContainerName=qbittorrent
 # Deliberately NOT pod-grouped with its cloudflared tunnel: this container runs
