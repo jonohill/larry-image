@@ -10,10 +10,15 @@ ContainerName=whisper-batch
 Environment=TZ=Pacific/Auckland
 Environment=WHISPER_MODEL_NAME=base.en-q8_0
 # Downloaded model weights persist here so they survive container restarts.
-Volume=/mnt/data/cutout/whisper-models:/models
+# :U makes podman chown the source to the container user (app, uid 10001) so
+# the model can be written -- the ExecStartPre mkdir creates it as root.
+Volume=/mnt/data/cutout/whisper-models:/models:U
 
 [Service]
 Restart=always
+# Ensure the bind-mount source exists on the data volume before podman runs;
+# RequiresMountsFor (above) guarantees /var/mnt/data is mounted first.
+ExecStartPre=/usr/bin/mkdir -p /mnt/data/cutout/whisper-models
 
 [Install]
 WantedBy=multi-user.target
