@@ -16,6 +16,8 @@ Volume=/mnt/data/cutout/whisper-models:/models:U
 
 [Service]
 Restart=always
+# Lower CPU scheduling priority so transcription yields to other work.
+Nice=5
 # Ensure the bind-mount source exists on the data volume before podman runs;
 # RequiresMountsFor (above) guarantees /var/mnt/data is mounted first.
 ExecStartPre=/usr/bin/mkdir -p /mnt/data/cutout/whisper-models
