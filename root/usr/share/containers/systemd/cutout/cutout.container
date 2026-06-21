@@ -1,0 +1,33 @@
+[Unit]
+Description=cutout
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/var/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/cutout:3
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=cutout.pod
+ContainerName=cutout
+Environment=TZ=Pacific/Auckland
+Environment=WORK_DIR=/work
+Environment=LOG_LEVEL=INFO
+Environment=S3_REGION=auto
+# behind auth
+Environment=ENABLE_OPML=true
+# Local whisper-batch sidecar in the same pod (reachable on localhost).
+Environment=TRANSCRIBE_URL=http://localhost:8000/v1/audio/transcriptions
+# Chapter generation via Gemini's OpenAI-compatible endpoint (decent free tier).
+Environment=CHAPTERS_URL=https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+Environment=CHAPTERS_MODEL=gemini-3.5-flash
+Environment=CHAPTERS_LANGUAGE=NZ English
+# Deployment-specific + secret values (S3 creds/endpoint/bucket, public URLs,
+# Gemini API key) live here -- see secrets/cutout/env.
+EnvironmentFile=/run/cutout/env
+Volume=/mnt/data/cutout/work:/work
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

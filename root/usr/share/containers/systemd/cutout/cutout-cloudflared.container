@@ -1,0 +1,23 @@
+[Unit]
+Description=cutout cloudflared tunnel
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:2026.5.2
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=cutout.pod
+Environment=TZ=Pacific/Auckland
+Volume=/run/cutout-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/cutout-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
+SecurityLabelDisable=true
+Exec=tunnel run
+
+[Service]
+Restart=always
+EnvironmentFile=/run/cutout-cloudflared/env
+ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/cutout-cloudflared/tunnel.yml /usr/share/containers/systemd/cutout/config.yml > /run/cutout-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/cutout-cloudflared/credentials.json'
+
+[Install]
+WantedBy=multi-user.target

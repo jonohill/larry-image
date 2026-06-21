@@ -1,0 +1,19 @@
+[Unit]
+Description=cutout whisper-batch (transcription sidecar)
+RequiresMountsFor=/var/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/whisper-batch:19
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=cutout.pod
+ContainerName=whisper-batch
+Environment=TZ=Pacific/Auckland
+Environment=WHISPER_MODEL_NAME=base.en-q8_0
+# Downloaded model weights persist here so they survive container restarts.
+Volume=/mnt/data/cutout/whisper-models:/models
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

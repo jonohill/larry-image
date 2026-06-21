@@ -1,0 +1,17 @@
+credentials-file: /etc/cloudflared/credentials.json
+ingress:
+  # Allow public requests only to /podcast/* (specific feeds)
+  - hostname: cutout.jonohill.nz
+    path: ^/podcast/.+
+    service: http://localhost:8080
+  - hostname: cutout.jonohill.nz
+    service: http_status:404
+
+  # All other requests must be via the internal access hostname
+  - hostname: cutout-internal.jonohill.nz
+    service: http://localhost:8080
+    originRequest:
+      access: *cf_access
+
+  # Required final catch-all.
+  - service: http_status:404
