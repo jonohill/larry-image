@@ -12,6 +12,7 @@ Environment=https_proxy=http://100.116.133.99:3128
 
 [Service]
 Restart=always
+RestartSec=30
 
 [Install]
 WantedBy=multi-user.target
