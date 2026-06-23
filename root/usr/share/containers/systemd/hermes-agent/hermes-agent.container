@@ -15,6 +15,9 @@ Exec=gateway run
 
 [Service]
 Restart=always
+# Ensure the bind-mount source exists on the data volume before podman runs;
+# RequiresMountsFor (above) guarantees /var/mnt/data is mounted first.
+ExecStartPre=/usr/bin/mkdir -p /mnt/data/hermes
 
 [Install]
 WantedBy=multi-user.target
