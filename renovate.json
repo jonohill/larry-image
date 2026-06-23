@@ -8,6 +8,11 @@
       "description": "linuxserver.io images use date-style tags, not semver",
       "matchPackageNames": ["lscr.io/linuxserver/**"],
       "versioning": "loose"
+    },
+    {
+      "description": "hermes-agent uses date-based tags like v2026.6.19",
+      "matchPackageNames": ["docker.io/nousresearch/hermes-agent"],
+      "versioning": "regex:^v(?<major>\\d{4})\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\.(?<build>\\d+))?$"
     }
   ],
   "automerge": true,

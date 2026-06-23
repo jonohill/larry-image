@@ -1,0 +1,23 @@
+[Unit]
+Description=hermes-agent cloudflared tunnel
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:2026.6.1
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=hermes-agent.pod
+Environment=TZ=Pacific/Auckland
+Volume=/run/hermes-agent-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/hermes-agent-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
+SecurityLabelDisable=true
+Exec=tunnel run
+
+[Service]
+Restart=always
+EnvironmentFile=/run/hermes-agent-cloudflared/env
+ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/hermes-agent-cloudflared/tunnel.yml /usr/share/containers/systemd/hermes-agent/config.yml > /run/hermes-agent-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/hermes-agent-cloudflared/credentials.json'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,7 @@
+credentials-file: /etc/cloudflared/credentials.json
+ingress:
+  # The dashboard binds 127.0.0.1:9119 inside this pod. Gate every request
+  # behind Cloudflare Access — it stores API keys and has no auth of its own.
+  - service: http://localhost:9119
+    originRequest:
+      access: *cf_access

@@ -1,0 +1,20 @@
+[Unit]
+Description=hermes-agent gateway
+RequiresMountsFor=/var/mnt/data
+
+[Container]
+Image=docker.io/nousresearch/hermes-agent:v2026.6.19
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=hermes-agent.pod
+Environment=TZ=Pacific/Auckland
+Environment=HERMES_UID=1000
+Environment=HERMES_GID=1000
+Volume=/mnt/data/hermes:/opt/data
+# Image ENTRYPOINT is s6-overlay's /init; this is the command it supervises.
+Exec=gateway run
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
