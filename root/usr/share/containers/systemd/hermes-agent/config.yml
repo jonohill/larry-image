@@ -4,8 +4,4 @@ ingress:
   # behind Cloudflare Access — it stores API keys and has no auth of its own.
   - service: http://localhost:9119
     originRequest:
-      # The dashboard validates the Host header against its loopback bind
-      # (DNS-rebinding defence, GHSA-ppp5-vxwm-4cf7) and has no flag to allow
-      # the public hostname in v2026.6.19. Present a loopback Host it trusts.
-      httpHostHeader: localhost:9119
       access: *cf_access

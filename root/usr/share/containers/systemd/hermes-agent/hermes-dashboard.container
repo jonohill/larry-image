@@ -11,10 +11,9 @@ Environment=TZ=Pacific/Auckland
 Environment=HERMES_UID=1000
 Environment=HERMES_GID=1000
 Volume=/mnt/data/hermes:/opt/data
-# Bind to loopback only; the cloudflared sidecar shares this pod's network
-# namespace and reaches it at localhost:9119. Ingress is gated by Cloudflare
-# Access (the dashboard stores API keys and has no auth of its own).
-Exec=dashboard --host 127.0.0.1 --no-open
+# Required to disable host check, have websockets work
+# Fine because it's on the pod's network
+Exec=dashboard --host 0.0.0.0 --insecure --no-open
 
 [Service]
 Restart=always

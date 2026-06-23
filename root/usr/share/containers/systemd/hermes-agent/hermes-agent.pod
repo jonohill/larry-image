@@ -3,3 +3,4 @@ Description=hermes-agent
 
 [Pod]
 PodName=hermes-agent
+Network=hermes.network
