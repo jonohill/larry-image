@@ -1,0 +1,18 @@
+[Unit]
+Description=hermes-agent API reverse proxy
+After=hermes-agent.service
+
+[Container]
+Image=docker.io/library/caddy:2-alpine
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pod=hermes-agent.pod
+Environment=TZ=Pacific/Auckland
+# Supplies API_SERVER_KEY, referenced as {env.API_SERVER_KEY} in the Caddyfile.
+EnvironmentFile=/run/hermes-agent/api.env
+Volume=/usr/share/containers/systemd/hermes-agent/Caddyfile:/etc/caddy/Caddyfile:ro
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

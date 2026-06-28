@@ -9,6 +9,8 @@ Pod=hermes-agent.pod
 Environment=TZ=Pacific/Auckland
 Environment=HERMES_UID=1000
 Environment=HERMES_GID=1000
+# Contains generated API key
+EnvironmentFile=/run/hermes-agent/api.env
 Volume=/mnt/data/hermes:/opt/data
 # Image ENTRYPOINT is s6-overlay's /init; this is the command it supervises.
 Exec=gateway run
