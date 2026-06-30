@@ -3,7 +3,7 @@ Description=filebot (renames/sorts downloads)
 RequiresMountsFor=/var/mnt/data
 
 [Container]
-Image=docker.io/jonoh/nas-filebot:v0.0.61
+Image=docker.io/jonoh/nas-filebot:v0.0.64
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 ContainerName=filebot
 ShmSize=256m
