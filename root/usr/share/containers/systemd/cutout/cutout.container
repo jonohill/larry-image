@@ -5,7 +5,7 @@ Requires=download-secrets.service
 RequiresMountsFor=/var/mnt/data
 
 [Container]
-Image=ghcr.io/jonohill/cutout:7
+Image=ghcr.io/jonohill/cutout:8
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Pod=cutout.pod
 ContainerName=cutout
@@ -21,6 +21,7 @@ Environment=TRANSCRIBE_URL=http://localhost:8000/v1/audio/transcriptions
 Environment=CHAPTERS_URL=https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
 Environment=CHAPTERS_MODEL=gemini-3.5-flash
 Environment=CHAPTERS_LANGUAGE=NZ English
+Environment=ENABLE_OVERCAST_PING=true
 # Deployment-specific + secret values (S3 creds/endpoint/bucket, public URLs,
 # Gemini API key) live here -- see secrets/cutout/env.
 EnvironmentFile=/run/cutout/env
