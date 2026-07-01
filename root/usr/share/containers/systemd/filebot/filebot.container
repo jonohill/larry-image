@@ -5,6 +5,9 @@ RequiresMountsFor=/var/mnt/data
 [Container]
 Image=docker.io/jonoh/nas-filebot:v0.0.64
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
 ContainerName=filebot
 ShmSize=256m
 Environment=TZ=Pacific/Auckland

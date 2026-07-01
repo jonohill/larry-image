@@ -7,6 +7,9 @@ RequiresMountsFor=/var/mnt/data
 [Container]
 Image=ghcr.io/hillnz/docker-nas-plex:526
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
 Pod=plex.pod
 ContainerName=plex
 Environment=TZ=Pacific/Auckland

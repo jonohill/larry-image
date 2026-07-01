@@ -4,6 +4,9 @@ Description=nettopbox (AU IPTV, Sydney)
 [Container]
 Image=ghcr.io/jonohill/nettopbox:0.2.0
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
 ContainerName=nettopbox_au
 Network=media.network
 Environment=NTB_IPTV_URL=https://i.mjh.nz/au/Sydney/raw-tv.m3u8

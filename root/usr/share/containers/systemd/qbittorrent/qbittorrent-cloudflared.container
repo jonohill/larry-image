@@ -7,6 +7,9 @@ Wants=qbittorrent.service
 [Container]
 Image=docker.io/cloudflare/cloudflared:2026.6.1
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
 Network=qbt.network
 Environment=TZ=Pacific/Auckland
 Volume=/run/qbittorrent-cloudflared/config.yml:/etc/cloudflared/config.yml:ro

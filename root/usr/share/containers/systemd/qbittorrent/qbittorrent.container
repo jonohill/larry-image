@@ -5,6 +5,9 @@ RequiresMountsFor=/var/mnt/data
 [Container]
 Image=ghcr.io/jonohill/nas-qbt:105
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
 ContainerName=qbittorrent
 # Deliberately NOT pod-grouped with its cloudflared tunnel: this container runs
 # a WireGuard VPN with a killswitch in its own netns. The tunnel must reach the
