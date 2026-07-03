@@ -1,0 +1,25 @@
+[Unit]
+Description=host ssh cloudflared tunnel
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:2026.6.1
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pull=never
+# For host ssh
+Network=host
+Environment=TZ=Pacific/Auckland
+Volume=/run/ssh-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+Volume=/run/ssh-cloudflared/credentials.json:/etc/cloudflared/credentials.json:ro
+SecurityLabelDisable=true
+Exec=tunnel run
+
+[Service]
+Restart=always
+EnvironmentFile=/run/ssh-cloudflared/env
+ExecStartPre=/usr/bin/sh -c 'cat /run/ssh-cloudflared/tunnel.yml /usr/share/containers/systemd/ssh/config.yml > /run/ssh-cloudflared/config.yml'
+ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/ssh-cloudflared/credentials.json'
+
+[Install]
+WantedBy=multi-user.target

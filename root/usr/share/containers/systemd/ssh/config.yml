@@ -1,0 +1,7 @@
+credentials-file: /etc/cloudflared/credentials.json
+ingress:
+  - hostname: larry.jonohill.nz
+    service: ssh://localhost:22
+
+  # Required final catch-all.
+  - service: http_status:404
