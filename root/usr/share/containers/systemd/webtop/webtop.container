@@ -13,6 +13,7 @@ Environment=PUID=1000
 Environment=PGID=1000
 Environment=TZ=Pacific/Auckland
 Volume=/mnt/data/webtop:/config
+Volume=/mnt/data/downloads:/config/downloads
 AddDevice=/dev/fuse
 AddCapability=SYS_ADMIN
 SecurityLabelDisable=true
