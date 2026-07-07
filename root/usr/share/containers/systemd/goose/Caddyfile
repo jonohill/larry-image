@@ -3,12 +3,23 @@
 	auto_https off
 }
 
+# Swap the external secret for goosed's internal (per-boot) one.
+(to_goosed) {
+	reverse_proxy 127.0.0.1:3000 {
+		header_up X-Secret-Key "{env.GOOSE_SERVER__SECRET_KEY}"
+	}
+}
+
 :8080 {
-	@authorized header X-Secret-Key {$GOOSE_EXTERNAL_SECRET_KEY}
-	handle @authorized {
-		reverse_proxy 127.0.0.1:3000 {
-			header_up X-Secret-Key "{env.GOOSE_SERVER__SECRET_KEY}"
-		}
+	# goose sends the secret in the X-Secret-Key header for REST/status, but in the
+	# ?token= query for the /acp WebSocket (WS handshakes can't set headers).
+	@viaheader header X-Secret-Key {$GOOSE_EXTERNAL_SECRET_KEY}
+	@viaquery query token={$GOOSE_EXTERNAL_SECRET_KEY}
+	handle @viaheader {
+		import to_goosed
+	}
+	handle @viaquery {
+		import to_goosed
 	}
 	handle {
 		respond "Unauthorized" 401
