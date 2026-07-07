@@ -1,5 +1,0 @@
-[Unit]
-Description=Isolated network for hermes-agent and its cloudflared tunnel
-
-[Network]
-NetworkName=hermes
