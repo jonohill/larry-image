@@ -1,0 +1,16 @@
+{
+	admin off
+	auto_https off
+}
+
+:8080 {
+	@authorized header X-Secret-Key {$GOOSE_EXTERNAL_SECRET_KEY}
+	handle @authorized {
+		reverse_proxy 127.0.0.1:3000 {
+			header_up X-Secret-Key "{env.GOOSE_SERVER__SECRET_KEY}"
+		}
+	}
+	handle {
+		respond "Unauthorized" 401
+	}
+}

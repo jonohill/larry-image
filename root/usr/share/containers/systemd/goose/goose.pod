@@ -1,0 +1,14 @@
+[Unit]
+Description=goose
+
+[Pod]
+PodName=goose
+Network=goose.network
+
+[Service]
+# Mint the goosed shared secret, shared between goosed and the caddy proxy.
+# goosed authenticates every request against GOOSE_SERVER__SECRET_KEY; the proxy
+# injects the same value as the X-Secret-Key header (see Caddyfile), so callers
+# vetted by Cloudflare Access never need to know it. Generated once and reused
+# across restarts (test -s) so the secret is stable while the box stays up.
+ExecStartPre=/usr/bin/sh -c 'install -d -m 0755 /run/goose; test -s /run/goose/secret.env || { umask 077; printf "GOOSE_SERVER__SECRET_KEY=%s\n" "$$(LC_ALL=C tr -dc a-f0-9 </dev/urandom | head -c 64)" > /run/goose/secret.env; }'

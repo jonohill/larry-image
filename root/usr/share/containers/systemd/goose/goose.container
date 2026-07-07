@@ -1,0 +1,39 @@
+[Unit]
+Description=goose goosed agent server
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/var/mnt/data
+
+[Container]
+Image=ghcr.io/jonohill/goose-claw:2
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above;
+# never pull into the primary store (avoids duplicate copies / orphaned records).
+Pull=never
+Pod=goose.pod
+ContainerName=goose
+Environment=TZ=Pacific/Auckland
+# goosed binds 0.0.0.0:3000 over plain HTTP (GOOSE_TLS=false is the image
+# default). The caddy proxy in this pod reaches it on localhost; TLS is
+# terminated at Cloudflare in front, so no in-pod TLS is needed.
+# Contains the minted GOOSE_SERVER__SECRET_KEY (see goose.pod).
+EnvironmentFile=/run/goose/secret.env
+# Provider config (GOOSE_PROVIDER/GOOSE_MODEL + OpenAI-compatible base URL and
+# key) from secrets/goose/env. Required: without a working provider the adversary
+# reviewer fails closed and denies shell/write tool calls.
+EnvironmentFile=/run/goose/env
+# Persist config + sessions (~/.config/goose, ~/.local/share/goose). :U chowns
+# the source to the container user (goose, uid 1000) so goosed can write it.
+Volume=/mnt/data/goose:/home/goose:U
+# Image ENTRYPOINT merges the baked config, then exec's `goosed`; `agent` is the
+# server subcommand (the image's default CMD, set here explicitly).
+Exec=agent
+
+[Service]
+Restart=always
+# Ensure the bind-mount source exists on the data volume before podman runs;
+# RequiresMountsFor (above) guarantees /var/mnt/data is mounted first.
+ExecStartPre=/usr/bin/mkdir -p /mnt/data/goose
+
+[Install]
+WantedBy=multi-user.target

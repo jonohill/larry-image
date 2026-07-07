@@ -1,0 +1,5 @@
+[Unit]
+Description=Isolated network for goose and its cloudflared tunnel
+
+[Network]
+NetworkName=goose
