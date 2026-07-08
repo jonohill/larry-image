@@ -22,5 +22,6 @@ EnvironmentFile=/run/goose-cloudflared/env
 ExecStartPre=/usr/bin/sh -c 'cat /run/cloudflared-access/access.yml /run/goose-cloudflared/tunnel.yml /usr/share/containers/systemd/goose/config.yml > /run/goose-cloudflared/config.yml'
 ExecStartPre=/usr/bin/sh -c 'echo "$$TUNNEL_CRED_CONTENTS" > /run/goose-cloudflared/credentials.json'
 
-[Install]
-WantedBy=multi-user.target
+# Disabled for now — not auto-started at boot.
+# [Install]
+# WantedBy=multi-user.target

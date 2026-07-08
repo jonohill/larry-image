@@ -35,5 +35,6 @@ Restart=always
 # RequiresMountsFor (above) guarantees /var/mnt/data is mounted first.
 ExecStartPre=/usr/bin/mkdir -p /mnt/data/goose
 
-[Install]
-WantedBy=multi-user.target
+# Disabled for now — not auto-started at boot.
+# [Install]
+# WantedBy=multi-user.target

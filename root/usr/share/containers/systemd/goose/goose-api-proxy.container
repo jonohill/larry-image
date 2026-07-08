@@ -26,5 +26,6 @@ Restart=always
 # Fail closed: ensure secret key is set
 ExecStartPre=/usr/bin/sh -c 'grep -Eq "^GOOSE_EXTERNAL_SECRET_KEY=.+" /run/goose/caddy.env'
 
-[Install]
-WantedBy=multi-user.target
+# Disabled for now — not auto-started at boot.
+# [Install]
+# WantedBy=multi-user.target
