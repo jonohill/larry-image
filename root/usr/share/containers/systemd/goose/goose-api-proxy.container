@@ -23,6 +23,8 @@ Volume=/usr/share/containers/systemd/goose/Caddyfile:/etc/caddy/Caddyfile:ro
 
 [Service]
 Restart=always
+# Fail closed: ensure secret key is set
+ExecStartPre=/usr/bin/sh -c 'grep -Eq "^GOOSE_EXTERNAL_SECRET_KEY=.+" /run/goose/caddy.env'
 
 [Install]
 WantedBy=multi-user.target
