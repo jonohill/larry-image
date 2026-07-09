@@ -1,5 +1,9 @@
 [Unit]
 Description=goose
+# See plex.pod: the pod's only container requires download-secrets, so the pod
+# must depend on it too or it is torn down out of band when secrets restart.
+After=download-secrets.service
+Requires=download-secrets.service
 
 [Pod]
 PodName=goose

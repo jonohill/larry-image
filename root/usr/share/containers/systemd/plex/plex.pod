@@ -1,5 +1,12 @@
 [Unit]
 Description=plex
+# Every container in this pod requires download-secrets, so a restart of it
+# stops them all; the pod's --exit-policy=stop then tears the pod down out of
+# band and the containers' BindsTo= start races the pod's stop job. Depending
+# on secrets here too puts the pod in the same transaction, so it is stopped
+# and restarted in order around its members.
+After=download-secrets.service
+Requires=download-secrets.service
 
 [Pod]
 PodName=plex
