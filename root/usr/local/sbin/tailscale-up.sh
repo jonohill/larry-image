@@ -6,8 +6,10 @@ set -euo pipefail
 # "NeedsLogin"/"Stopped"/"NoState" all mean we should attempt the bootstrap.
 state="$(tailscale status --json 2>/dev/null | jq -r '.BackendState' 2>/dev/null || true)"
 if [ "$state" = "Running" ]; then
-    echo "tailscale already up (BackendState=Running); nothing to do."
-    exit 0
+    # Already on the tailnet — don't re-auth, but converge the exit-node
+    # advertisement so this setting can be changed without re-bootstrapping.
+    echo "tailscale already up (BackendState=Running); ensuring exit-node advertisement."
+    exec tailscale set --advertise-exit-node
 fi
 
 env_file=/run/tailscale/env
@@ -25,4 +27,5 @@ exec tailscale up \
     --auth-key="$TS_AUTHKEY" \
     --hostname="$(hostname -s)" \
     --ssh \
+    --advertise-exit-node \
     ${TS_UP_ARGS:-}
