@@ -1,3 +1,0 @@
-credentials-file: /etc/cloudflared/credentials.json
-ingress:
-  - service: http://localhost:8080
