@@ -4,7 +4,7 @@ After=download-secrets.service
 Requires=download-secrets.service
 
 [Container]
-Image=docker.io/cloudflare/cloudflared:2026.7.0
+Image=docker.io/cloudflare/cloudflared:2026.7.1
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 Pull=never
 # For host ssh
