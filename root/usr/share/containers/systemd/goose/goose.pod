@@ -8,3 +8,4 @@ Requires=download-secrets.service
 [Pod]
 PodName=goose
 Network=goose.network
+Network=qbt.network
