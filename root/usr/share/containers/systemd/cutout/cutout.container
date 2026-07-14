@@ -26,6 +26,7 @@ Environment=CHAPTERS_URL=https://generativelanguage.googleapis.com/v1beta/openai
 Environment=CHAPTERS_MODEL=gemini-3.5-flash
 Environment=CHAPTERS_LANGUAGE=NZ English
 Environment=ENABLE_OVERCAST_PING=true
+Environment=CLEANUP_TTL=60d
 # Deployment-specific + secret values (S3 creds/endpoint/bucket, public URLs,
 # Gemini API key) live here -- see secrets/cutout/env.
 EnvironmentFile=/run/cutout/env
