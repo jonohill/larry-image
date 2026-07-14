@@ -3,6 +3,10 @@ Description=plex
 After=download-secrets.service
 Requires=download-secrets.service
 RequiresMountsFor=/var/mnt/data
+# Widen the default start-limit window (5 restarts / 10s) so a health-triggered
+# kill-and-restart isn't mistaken for a crash loop and parked as failed.
+StartLimitIntervalSec=300
+StartLimitBurst=5
 
 [Container]
 Image=ghcr.io/hillnz/docker-nas-plex:539
@@ -38,7 +42,12 @@ AddDevice=/dev/fuse
 AddCapability=SYS_ADMIN
 # For FUSE
 SecurityLabelDisable=true
+HealthCmd=curl -fsS http://localhost:32400/identity || exit 1
+HealthInterval=30s
+HealthTimeout=10s
+HealthRetries=3
 HealthStartPeriod=120s
+HealthOnFailure=kill
 
 [Service]
 Restart=always
