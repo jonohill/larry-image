@@ -13,6 +13,11 @@ Pull=never
 Pod=goose.pod
 ContainerName=goose
 Environment=TZ=Pacific/Auckland
+# Read-only host journal (= container logs; the journald log driver is used)
+# via systemd-journal-gatewayd on the goose bridge gateway. e.g.
+#   curl -H 'Accept: application/json' -H 'Range: entries=:-100:100' \
+#     "$JOURNAL_GATEWAY_URL/entries?CONTAINER_NAME=plex"
+Environment=JOURNAL_GATEWAY_URL=http://10.89.3.1:19531
 # Slack tokens (xoxb bot + xapp app-level) and the provider key. OpenAB expands
 # ${SLACK_BOT_TOKEN}/${SLACK_APP_TOKEN}/${OLLAMA_API_KEY} from its environment
 # when it loads the baked /etc/openab/config.toml, then forwards the resolved

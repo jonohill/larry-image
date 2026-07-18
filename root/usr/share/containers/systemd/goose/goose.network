@@ -3,3 +3,8 @@ Description=Isolated network for goose and its cloudflared tunnel
 
 [Network]
 NetworkName=goose
+# Pinned (to the values host-local IPAM had already assigned) so the gateway
+# address is stable: systemd-journal-gatewayd binds to it to serve read-only
+# container logs to goose. See systemd-journal-gatewayd.socket.d/goose-bridge.conf.
+Subnet=10.89.3.0/24
+Gateway=10.89.3.1

@@ -47,6 +47,12 @@ RUN systemctl enable var-mnt-data.mount
 # daily updates at 3am, reboot if needed
 RUN systemctl enable bootc-fetch-apply-updates.timer
 
+# Read-only container-log (journal) access for the goose agent over HTTP,
+# bound to the goose bridge gateway — see
+# /etc/systemd/system/systemd-journal-gatewayd.socket.d/goose-bridge.conf
+RUN dnf install -y systemd-journal-remote && dnf clean all && \
+    systemctl enable systemd-journal-gatewayd.socket
+
 RUN dnf install -y greenboot && dnf clean all && \
     chmod 0755 /etc/greenboot/check/required.d/*.sh && \
     systemctl enable greenboot-healthcheck.service
