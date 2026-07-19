@@ -28,6 +28,7 @@ EnvironmentFile=/run/goose/env
 # /data/workspace). :U chowns the source to the container user (goose, uid 1000).
 Volume=/mnt/data/goose:/data:U
 Volume=/mnt/data/downloads:/mnt/data/downloads
+Volume=/mnt/data/tmp:/mnt/data/tmp
 # No Exec= override: use the image default CMD
 # (openab run -c /etc/openab/config.toml). Slack Socket Mode is an outbound
 # WebSocket, so no ports are published and no inbound proxy/tunnel is needed.
