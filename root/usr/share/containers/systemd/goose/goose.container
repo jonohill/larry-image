@@ -29,6 +29,8 @@ EnvironmentFile=/run/goose/env
 Volume=/mnt/data/goose:/data:U
 Volume=/mnt/data/downloads:/mnt/data/downloads
 Volume=/mnt/data/tmp:/mnt/data/tmp
+# Read-only view of the app quadlets
+Volume=/usr/share/containers/systemd:/usr/share/containers/systemd:ro
 # No Exec= override: use the image default CMD
 # (openab run -c /etc/openab/config.toml). Slack Socket Mode is an outbound
 # WebSocket, so no ports are published and no inbound proxy/tunnel is needed.
