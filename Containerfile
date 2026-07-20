@@ -63,3 +63,9 @@ RUN dnf install -y greenboot && dnf clean all && \
 RUN if [ "$ENABLE_QUADLETS" != "1" ]; then \
         rm -rf /usr/share/containers/systemd/* /usr/lib/bootc/bound-images.d/*; \
     fi
+
+ARG IMAGE_REVISION=unknown
+ARG IMAGE_BUILD=dev
+LABEL org.opencontainers.image.source="https://github.com/jonohill/larry-image" \
+      org.opencontainers.image.revision="$IMAGE_REVISION" \
+      nz.jonohill.build="$IMAGE_BUILD"

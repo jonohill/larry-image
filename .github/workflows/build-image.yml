@@ -24,6 +24,9 @@ jobs:
           tags: |
             latest
             ${{ github.run_number }}
+          build-args: |
+            IMAGE_REVISION=${{ github.sha }}
+            IMAGE_BUILD=${{ github.run_number }}
           containerfiles: |
             ./Containerfile
 
@@ -56,6 +59,8 @@ jobs:
             test-${{ github.run_number }}
           build-args: |
             ENABLE_QUADLETS=0
+            IMAGE_REVISION=${{ github.sha }}
+            IMAGE_BUILD=${{ github.run_number }}
           containerfiles: |
             ./Containerfile
 
