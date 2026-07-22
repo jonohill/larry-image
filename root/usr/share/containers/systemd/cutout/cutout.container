@@ -23,7 +23,7 @@ Environment=ENABLE_DASHBOARD=true
 Environment=TRANSCRIBE_URL=http://localhost:8000/v1/audio/transcriptions
 # Chapter generation via Gemini's OpenAI-compatible endpoint (decent free tier).
 Environment=CHAPTERS_URL=https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
-Environment=CHAPTERS_MODEL=gemini-3.5-flash
+Environment=CHAPTERS_MODEL=gemini-3.6-flash
 Environment=CHAPTERS_LANGUAGE=NZ English
 Environment=ENABLE_OVERCAST_PING=true
 Environment=CLEANUP_TTL=60d
