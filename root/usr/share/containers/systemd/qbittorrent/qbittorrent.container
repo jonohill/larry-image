@@ -21,6 +21,7 @@ Environment=PGID=1000
 Environment=VPN_ENABLED=true
 Environment=VPN_CONF=wg0
 Environment=VPN_IP_CHECK_DELAY=5
+Environment="VPN_NAMESERVERS=1.1.1.1@853#cloudflare-dns.com,1.0.0.1@853#cloudflare-dns.com"
 Environment=PRIVOXY_ENABLED=false
 Environment=WEBUI_PORTS=9092/tcp
 Volume=/mnt/data/downloads-incomplete:/downloads-incomplete
