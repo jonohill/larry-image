@@ -25,6 +25,9 @@ RUN useradd --create-home --groups wheel jono && \
 RUN chmod 0755 /usr/local/sbin/show-host-key.sh && \
     systemctl enable show-host-key.service
 
+# workaround for bootc failing to prune a bound image ID that has multiple tags
+RUN chmod 0755 /usr/local/sbin/dedupe-bound-images.sh
+
 COPY vendor/bootc-secrets/install /tmp/bootc-secrets-install
 RUN /tmp/bootc-secrets-install/install.sh && rm -rf /tmp/bootc-secrets-install
 
