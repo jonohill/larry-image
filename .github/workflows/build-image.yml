@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Build image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@v3
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           tags: |
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Build image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@v3
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           tags: |
