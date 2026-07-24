@@ -9,7 +9,7 @@ StartLimitIntervalSec=300
 StartLimitBurst=5
 
 [Container]
-Image=ghcr.io/hillnz/docker-nas-plex:543
+Image=ghcr.io/hillnz/docker-nas-plex:545
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 # Image is logically bound, so bootc keeps it in the additional store above;
 # never pull into the primary store (avoids duplicate copies / orphaned records).
