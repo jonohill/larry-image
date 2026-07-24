@@ -31,7 +31,7 @@ jobs:
             ./Containerfile
 
       - name: Push image
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@v3
         if: github.ref == 'refs/heads/main'
         with:
           registry: ${{ env.REGISTRY }}
@@ -65,7 +65,7 @@ jobs:
             ./Containerfile
 
       - name: Push image
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@v3
         with:
           registry: ${{ env.REGISTRY }}
           image: ${{ env.IMAGE }}
