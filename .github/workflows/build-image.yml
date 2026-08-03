@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Build image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@v3
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           tags: |
@@ -31,7 +31,7 @@ jobs:
             ./Containerfile
 
       - name: Push image
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@v3
         if: github.ref == 'refs/heads/main'
         with:
           registry: ${{ env.REGISTRY }}
@@ -51,7 +51,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Build image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@v3
         with:
           image: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           tags: |
@@ -65,7 +65,7 @@ jobs:
             ./Containerfile
 
       - name: Push image
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@v3
         with:
           registry: ${{ env.REGISTRY }}
           image: ${{ env.IMAGE }}
