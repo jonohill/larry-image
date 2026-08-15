@@ -1,0 +1,34 @@
+[Unit]
+Description=gluetun VPN gateway for qbittorrent (ExpressVPN, OpenVPN)
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/var/mnt/data
+
+[Container]
+Image=docker.io/qmcgaw/gluetun:v3.41.3
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+Pull=never
+ContainerName=gluetun
+# DNS= and the other network options live on the pod (qbt.pod)
+Pod=qbt.pod
+AddCapability=NET_ADMIN
+AddDevice=/dev/net/tun
+Environment=TZ=Pacific/Auckland
+# The built-in `expressvpn` provider ships stale endpoint IPs and is unmaintained
+Environment=VPN_SERVICE_PROVIDER=custom
+Environment=VPN_TYPE=openvpn
+Environment=OPENVPN_CUSTOM_CONFIG=/gluetun/custom.conf
+Volume=/run/gluetun/custom.conf:/gluetun/custom.conf:ro
+# WebUI
+Environment=FIREWALL_INPUT_PORTS=9092
+# Creds
+EnvironmentFile=/run/gluetun/env
+SecurityLabelDisable=true
+
+[Service]
+Restart=always
+RestartSec=10
+ExecStartPre=/usr/local/sbin/gluetun-resolve-ovpn.sh /mnt/data/qbt/expressvpn.ovpn /run/gluetun/custom.conf
+
+[Install]
+WantedBy=multi-user.target

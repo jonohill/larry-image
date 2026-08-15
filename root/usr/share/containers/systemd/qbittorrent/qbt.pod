@@ -1,0 +1,13 @@
+[Unit]
+Description=qbittorrent + its gluetun VPN gateway
+
+After=download-secrets.service
+Requires=download-secrets.service
+
+[Pod]
+PodName=qbt
+Network=qbt.network
+NetworkAlias=qbittorrent
+PublishPort=9092:9092
+# Use gluetun DNS
+DNS=127.0.0.1
