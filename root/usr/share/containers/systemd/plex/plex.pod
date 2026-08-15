@@ -13,5 +13,5 @@ PodName=plex
 Network=media.network
 NetworkAlias=plex
 
-# AddHost=id.jottacloud.com:127.0.0.1
-# AddHost=jfs.jottacloud.com:127.0.0.1
+AddHost=id.jottacloud.com:127.0.0.1
+AddHost=jfs.jottacloud.com:127.0.0.1
