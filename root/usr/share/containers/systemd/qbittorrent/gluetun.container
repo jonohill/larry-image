@@ -24,6 +24,11 @@ Environment=FIREWALL_INPUT_PORTS=9092
 # Creds
 EnvironmentFile=/run/gluetun/env
 SecurityLabelDisable=true
+HealthCmd=/gluetun-entrypoint healthcheck
+HealthInterval=1m
+HealthRetries=5
+HealthStartPeriod=2m
+HealthOnFailure=kill
 
 [Service]
 Restart=always
