@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     name: Build image
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
 
     steps:
       - uses: actions/checkout@v7
@@ -44,7 +44,7 @@ jobs:
 
   build-test:
     name: Build test image (no quadlets)
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     if: github.ref == 'refs/heads/main'
 
     steps:
