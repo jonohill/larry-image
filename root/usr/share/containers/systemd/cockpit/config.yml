@@ -1,0 +1,8 @@
+credentials-file: /etc/cloudflared/credentials.json
+# Serves whichever hostnames are routed to this tunnel, so none are named here.
+ingress:
+  - service: https://localhost:9090
+    originRequest:
+      access: *cf_access
+      # cockpit-ws serves a self-signed certificate.
+      noTLSVerify: true

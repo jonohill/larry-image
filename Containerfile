@@ -56,6 +56,19 @@ RUN systemctl enable bootc-fetch-apply-updates.timer
 RUN dnf install -y systemd-journal-remote && dnf clean all && \
     systemctl enable systemd-journal-gatewayd.socket
 
+# Cockpit web console on :9090. Only the tailnet and the cockpit tunnel reach
+# it, because the OCI security list admits nothing on that port. Weak deps are
+# off to keep out cockpit-packagekit, which cannot update a bootc host.
+RUN dnf install -y --setopt=install_weak_deps=False \
+        cockpit \
+        cockpit-files \
+        cockpit-ostree \
+        cockpit-podman \
+        cockpit-storaged \
+        sscg \
+    && dnf clean all && \
+    systemctl enable cockpit.socket
+
 RUN dnf install -y greenboot && dnf clean all && \
     chmod 0755 /etc/greenboot/check/required.d/*.sh && \
     systemctl enable greenboot-healthcheck.service
