@@ -136,7 +136,9 @@ encrypt() {
     pubkey="$(age-keygen -y "$age_key_file")"
 
     # Pack the secrets (skip repo metadata) and encrypt to a single binary blob.
-    tar -czf - -C "$SECRETS_DIR" \
+    # COPYFILE_DISABLE stops macOS tar adding AppleDouble ._ entries.
+    COPYFILE_DISABLE=1 tar -czf - -C "$SECRETS_DIR" \
+        --no-xattrs \
         --exclude='.gitignore' \
         --exclude='*.md' \
         . \

@@ -53,10 +53,14 @@ curl -fsSL "$url" -o "$tmp_dir/secrets.age"
 age --decrypt --identity "$HOST_KEY_PATH" \
     --output "$tmp_dir/secrets.tar.gz" \
     "$tmp_dir/secrets.age"
-tar -xzf "$tmp_dir/secrets.tar.gz" -C /run
+# The archive's "." entry carries the packing user's uid and mode. Do not let
+# it replace those of /run, or confined services lose access to /run.
+tar -xzf "$tmp_dir/secrets.tar.gz" -C /run \
+    --no-same-owner --no-same-permissions --no-overwrite-dir
 
 # Tighten permissions on everything we just extracted: 700 dirs, 600 files.
 tar -tzf "$tmp_dir/secrets.tar.gz" | while IFS= read -r entry; do
+    case "${entry%/}" in .|'') continue ;; esac
     target="/run/$entry"
     if [ -d "$target" ]; then
         chmod 700 "$target"
