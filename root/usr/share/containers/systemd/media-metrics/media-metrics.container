@@ -8,7 +8,7 @@ RequiresMountsFor=/var/mnt/data
 StartLimitIntervalSec=0
 
 [Container]
-Image=docker.io/library/python:3.14-alpine
+Image=docker.io/library/python:3.15-alpine
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 # Image is logically bound, so bootc keeps it in the additional store above
 Pull=never
