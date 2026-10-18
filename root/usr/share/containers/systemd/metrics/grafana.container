@@ -7,7 +7,7 @@ After=download-secrets.service network-online.target
 StopWhenUnneeded=true
 
 [Container]
-Image=docker.io/grafana/grafana:13.2.3
+Image=docker.io/grafana/grafana:13.2.4
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 # Image is logically bound, so bootc keeps it in the additional store above
 Pull=never
