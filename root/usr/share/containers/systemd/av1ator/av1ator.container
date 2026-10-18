@@ -14,8 +14,7 @@ Volume=/mnt/data/tmp/plex-media:/output
 # Read by media-metrics. Directories made under /run are var_run_t, which
 # containers can't write.
 Volume=/run/media-status/av1ator:/status:z
-Exec=--crf 27 --preset 6 --delete-input --min-size 500MB --max-width 1920 --skip-codec av1 --passthrough-filtered --nice 10 \
-    --status-dir /status --sidecar-ext srt --sidecar-ext ass --sidecar-ext ssa --sidecar-ext vtt --sidecar-ext sup
+Exec=--crf 27 --preset 6 --delete-input --min-size 500MB --max-width 1920 --skip-codec av1 --passthrough-filtered --nice 10 --status-dir /status --sidecar-ext srt --sidecar-ext ass --sidecar-ext ssa --sidecar-ext vtt --sidecar-ext sup
 
 [Service]
 Restart=always

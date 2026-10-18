@@ -24,9 +24,7 @@ Volume=/:/host:ro,rslave
 Volume=/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
 SecurityLabelDisable=true
 # systemd turns $$ into $.
-Exec=--path.rootfs=/host --path.udev.data=/host/run/udev/data --web.listen-address=127.0.0.1:9100 \
-    --collector.systemd --collector.systemd.unit-include=(av1ator|filebot|qbittorrent|gluetun|plex|rclone-move-media|media-metrics)[.]service \
-    --collector.filesystem.mount-points-exclude=^/(dev|proc|run/credentials/.+|sys|var/lib/containers/storage/.+)($$|/)
+Exec=--path.rootfs=/host --path.udev.data=/host/run/udev/data --web.listen-address=127.0.0.1:9100 --collector.systemd --collector.systemd.unit-include=(av1ator|filebot|qbittorrent|gluetun|plex|rclone-move-media|media-metrics)[.]service --collector.filesystem.mount-points-exclude=^/(dev|proc|run/credentials/.+|sys|var/lib/containers/storage/.+)($$|/)
 
 [Service]
 Restart=always
