@@ -1,0 +1,14 @@
+media_upload_state{state="idle"} 0
+media_upload_state{state="waiting"} 0
+media_upload_state{state="moving"} 1
+media_upload_state{state="cleanup"} 0
+media_upload_bytes_per_second 9500000.0
+media_upload_done_bytes 1200000000
+media_upload_total_bytes 2400000000
+media_upload_eta_seconds 126
+media_upload_file_size_bytes{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 2400000000
+media_upload_file_done_bytes{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 1200000000
+media_upload_file_bytes_per_second{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 9500000.0
+media_upload_file_eta_seconds{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 126
+media_upload_last_timestamp_seconds{ok="true"} 1791790000.0
+media_upload_last_bytes 3000000000

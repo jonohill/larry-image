@@ -1,0 +1,94 @@
+:root {
+    --page: #f2f2f2;
+    --tile: #ffffff;
+    --tile-hover: #e0e0e0;
+    --text: #151515;
+    --border: #d2d2d2;
+    color-scheme: light;
+}
+
+:root.dark {
+    --page: #151515;
+    --tile: #292929;
+    --tile-hover: #383838;
+    --text: #ffffff;
+    --border: #444548;
+    color-scheme: dark;
+}
+
+body {
+    margin: 0;
+    background: var(--page);
+    color: var(--text);
+    font-family: "Red Hat Text", RedHatText, system-ui, sans-serif;
+}
+
+main {
+    padding: 24px;
+}
+
+section + section {
+    margin-top: 32px;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h2 a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px;
+    margin-left: -8px;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+}
+
+h2 a:hover,
+h2 a:focus-visible {
+    background: var(--tile-hover);
+}
+
+h2 img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 136px);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.grid a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--tile);
+    color: inherit;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.grid a:hover,
+.grid a:focus-visible {
+    background: var(--tile-hover);
+}
+
+.grid img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+}

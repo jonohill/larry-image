@@ -1,5 +1,10 @@
 [Unit]
-Description=Isolated network for qbittorrent and its cloudflared tunnel
+Description=Network for qbittorrent and the containers that use its WebUI
 
 [Network]
 NetworkName=qbt
+Subnet=10.89.2.0/24
+# Containers get addresses from the lower half only. media-metrics has a fixed
+# address above it, which qBittorrent's WebUI exempts from login, so no other
+# container can ever be given that address.
+IPRange=10.89.2.0/25

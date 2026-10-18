@@ -1,0 +1,19 @@
+media_torrent_info{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL",state="downloading"} 1
+media_torrent_progress_ratio{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 0.5
+media_torrent_size_bytes{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 2097152000
+media_torrent_left_bytes{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 1048576000
+media_torrent_download_bytes_per_second{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 2621440
+media_torrent_eta_seconds{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 400
+media_torrent_availability{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 4.5
+media_torrent_seeds{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 12
+media_torrent_added_timestamp_seconds{hash="1111111111111111111111111111111111111111",name="Example Show S01E01 1080p WEB-DL"} 1791700000
+media_torrent_info{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p",state="stalledDL"} 1
+media_torrent_progress_ratio{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 0.9393
+media_torrent_size_bytes{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 3166451712
+media_torrent_left_bytes{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 192937984
+media_torrent_download_bytes_per_second{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 0
+media_torrent_availability{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 0.939
+media_torrent_seeds{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 0
+media_torrent_added_timestamp_seconds{hash="2222222222222222222222222222222222222222",name="Example \"Quoted\" Film (2020) 1080p"} 1787963436
+media_qbt_download_bytes_per_second 2621440
+media_qbt_upload_bytes_per_second 1024

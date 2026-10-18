@@ -1,0 +1,36 @@
+[Unit]
+Description=Prometheus node exporter
+After=network-online.target
+Wants=network-online.target
+# A failed unit at boot triggers a greenboot rollback, so keep restarting
+# rather than parking the unit as failed.
+StartLimitIntervalSec=0
+
+[Container]
+Image=quay.io/prometheus/node-exporter:v1.12.1
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above
+Pull=never
+ContainerName=node-exporter
+# VictoriaMetrics scrapes it on loopback, and the network collectors read the
+# host's interfaces.
+Network=host
+PodmanArgs=--pid=host
+Environment=TZ=Pacific/Auckland
+# rslave lets mounts made after the container starts, such as /var/mnt/data,
+# show up.
+Volume=/:/host:ro,rslave
+# The systemd collector talks to systemd over the system bus.
+Volume=/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket:ro
+SecurityLabelDisable=true
+# systemd turns $$ into $.
+Exec=--path.rootfs=/host --path.udev.data=/host/run/udev/data --web.listen-address=127.0.0.1:9100 \
+    --collector.systemd --collector.systemd.unit-include=(av1ator|filebot|qbittorrent|gluetun|plex|rclone-move-media|media-metrics)[.]service \
+    --collector.filesystem.mount-points-exclude=^/(dev|proc|run/credentials/.+|sys|var/lib/containers/storage/.+)($$|/)
+
+[Service]
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

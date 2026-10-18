@@ -1,0 +1,56 @@
+[Unit]
+Description=Grafana
+Requires=download-secrets.service
+After=download-secrets.service network-online.target
+# Started on demand by grafana-proxy.service, and stopped once the proxy
+# exits after its idle timeout.
+StopWhenUnneeded=true
+
+[Container]
+Image=docker.io/grafana/grafana:13.2.3
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above
+Pull=never
+ContainerName=grafana
+Network=host
+Environment=TZ=Pacific/Auckland
+Environment=GF_SERVER_HTTP_ADDR=127.0.0.1
+Environment=GF_SERVER_HTTP_PORT=3001
+# The Cockpit tunnel routes /grafana/ here, and the tailnet URL uses the same
+# path. A path-only root URL keeps redirects relative, so they work on any
+# hostname.
+Environment=GF_SERVER_ROOT_URL=/grafana/
+Environment=GF_SERVER_SERVE_FROM_SUB_PATH=true
+Environment=GF_PLUGINS_PREINSTALL_DISABLED=true
+Environment=GF_ANALYTICS_REPORTING_ENABLED=false
+Environment=GF_ANALYTICS_CHECK_FOR_UPDATES=false
+Environment=GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES=false
+Environment=GF_UNIFIED_ALERTING_ENABLED=false
+# An open dashboard tab would otherwise hold a Live WebSocket and keep the
+# proxy from going idle.
+Environment=GF_LIVE_MAX_CONNECTIONS=0
+# Through the tunnel, Cloudflare Access adds its JWT to every request, so
+# Grafana signs the user in from it. Requests without the header, as over the
+# tailnet, fall back to the password login.
+Environment=GF_AUTH_JWT_ENABLED=true
+Environment=GF_AUTH_JWT_HEADER_NAME=Cf-Access-Jwt-Assertion
+Environment=GF_AUTH_JWT_EMAIL_CLAIM=email
+Environment=GF_AUTH_JWT_USERNAME_CLAIM=email
+Environment=GF_AUTH_JWT_AUTO_SIGN_UP=true
+# The JWT's key set URL, expected claims and role mapping, plus
+# GF_SECURITY_ADMIN_PASSWORD, which is read only when the database is first
+# created.
+EnvironmentFile=/run/grafana/env
+Volume=/var/lib/grafana:/var/lib/grafana:Z
+Volume=/usr/share/containers/systemd/metrics/grafana-provisioning:/etc/grafana/provisioning:ro
+
+[Service]
+Restart=on-failure
+RestartSec=10
+# The image runs as UID 472.
+ExecStartPre=/usr/bin/install -d -o 472 -g 0 /var/lib/grafana
+# The container counts as started before Grafana listens. Holding startup
+# until the health check passes keeps the proxy from forwarding the first
+# request to a closed port.
+ExecStartPost=/usr/bin/sh -c 'until curl -sf -o /dev/null http://127.0.0.1:3001/api/health; do sleep 1; done'
+TimeoutStartSec=180

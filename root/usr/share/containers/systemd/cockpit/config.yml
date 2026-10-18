@@ -1,6 +1,13 @@
 credentials-file: /etc/cloudflared/credentials.json
-# Serves whichever hostnames are routed to this tunnel, so none are named here.
+# The rules match on path only and serve whichever hostnames are routed to
+# this tunnel, so none are named here.
 ingress:
+  # Grafana's on-demand socket, see grafana.container.
+  - path: ^/grafana(/|$)
+    service: http://localhost:3000
+    originRequest:
+      access: *cf_access
+
   - service: https://localhost:9090
     originRequest:
       access: *cf_access

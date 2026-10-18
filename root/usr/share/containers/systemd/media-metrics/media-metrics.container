@@ -1,0 +1,44 @@
+[Unit]
+Description=media-metrics (Prometheus exporter for the media pipeline)
+After=download-secrets.service
+Requires=download-secrets.service
+RequiresMountsFor=/var/mnt/data
+# A failed unit at boot triggers a greenboot rollback, so keep restarting
+# rather than parking the unit as failed.
+StartLimitIntervalSec=0
+
+[Container]
+Image=docker.io/library/python:3.14-alpine
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above
+Pull=never
+ContainerName=media-metrics
+# Reaches qBittorrent and Plex by their network aliases. qBittorrent's WebUI
+# lets this fixed address in without a login, see qbt.network.
+Network=qbt.network:ip=10.89.2.250
+Network=media.network
+PublishPort=127.0.0.1:9101:9101
+User=65534:65534
+ReadOnly=true
+DropCapability=ALL
+NoNewPrivileges=true
+Environment=TZ=Pacific/Auckland
+Environment=PYTHONDONTWRITEBYTECODE=1
+# PLEX_TOKEN
+EnvironmentFile=/run/media-metrics/env
+# /usr is read-only, so this mount can't be relabelled, and doesn't need to be.
+Volume=/usr/share/containers/systemd/media-metrics/media-metrics.py:/media-metrics.py:ro
+# Already labelled container_file_t.
+Volume=/var/mnt/data/tmp/sorted-media:/data/sorted-media:ro
+Volume=/var/mnt/data/tmp/plex-media:/data/plex-media:ro
+# Directories made under /run are var_run_t, which containers can't read.
+Volume=/run/media-status:/status:ro,z
+Exec=python3 /media-metrics.py
+
+[Service]
+Restart=always
+RestartSec=30
+ExecStartPre=/usr/bin/mkdir -p /run/media-status/av1ator /run/media-status/rclone-move
+
+[Install]
+WantedBy=multi-user.target

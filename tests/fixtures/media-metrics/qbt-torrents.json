@@ -1,0 +1,5 @@
+[
+  {"added_on": 1791700000, "amount_left": 1048576000, "availability": 4.5, "category": "", "dlspeed": 2621440, "eta": 400, "hash": "1111111111111111111111111111111111111111", "name": "Example Show S01E01 1080p WEB-DL", "num_seeds": 12, "progress": 0.5, "size": 2097152000, "state": "downloading", "upspeed": 0},
+  {"added_on": 1787963436, "amount_left": 192937984, "availability": 0.939, "category": "", "dlspeed": 0, "eta": 8640000, "hash": "2222222222222222222222222222222222222222", "name": "Example \"Quoted\" Film (2020) 1080p", "num_seeds": 0, "progress": 0.9393, "size": 3166451712, "state": "stalledDL", "upspeed": 0},
+  {"added_on": 1780000000, "amount_left": 0, "availability": -1, "category": "", "dlspeed": 0, "eta": 8640000, "hash": "3333333333333333333333333333333333333333", "name": "Seeding Only", "num_seeds": 0, "progress": 1, "size": 1000, "state": "stalledUP", "upspeed": 0}
+]

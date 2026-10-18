@@ -1,0 +1,11 @@
+media_encode_active 1
+media_encode_start_timestamp_seconds{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 1791780000.0
+media_encode_input_bytes{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 2731185389
+media_encode_output_bytes{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 170917888
+media_encode_duration_seconds{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 3000.0
+media_encode_position_seconds{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 1200.0
+media_encode_fps{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 2.7
+media_encode_speed_ratio{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 0.1
+media_encode_progress_ratio{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 0.4
+media_encode_eta_seconds{file="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv",action="encode"} 18000
+media_encode_skipped_timestamp_seconds{file="Movies/Broken (2020)/Broken (2020).mkv",reason="ffmpeg rc=1"} 1791700000.0

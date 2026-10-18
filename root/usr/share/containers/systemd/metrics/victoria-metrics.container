@@ -1,0 +1,31 @@
+[Unit]
+Description=VictoriaMetrics
+After=network-online.target
+Wants=network-online.target
+# A failed unit at boot triggers a greenboot rollback, so keep restarting
+# rather than parking the unit as failed.
+StartLimitIntervalSec=0
+
+[Container]
+Image=docker.io/victoriametrics/victoria-metrics:v1.153.0
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+# Image is logically bound, so bootc keeps it in the additional store above
+Pull=never
+ContainerName=victoria-metrics
+Network=host
+Environment=TZ=Pacific/Auckland
+# On the root disk: /var/mnt/data holds the media staging dirs and runs close
+# to full.
+Volume=/var/lib/victoria-metrics:/storage:Z
+Volume=/usr/share/containers/systemd/metrics/scrape.yml:/etc/victoria-metrics/scrape.yml:ro
+# The HTTP API has no auth and can delete series, so it stays on loopback.
+# A retention period without a suffix is in months.
+Exec=-storageDataPath=/storage -retentionPeriod=3 -httpListenAddr=127.0.0.1:8428 -promscrape.config=/etc/victoria-metrics/scrape.yml
+
+[Service]
+Restart=always
+RestartSec=30
+ExecStartPre=/usr/bin/mkdir -p /var/lib/victoria-metrics
+
+[Install]
+WantedBy=multi-user.target

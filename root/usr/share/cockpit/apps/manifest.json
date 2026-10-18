@@ -1,0 +1,14 @@
+{
+    "version": 0,
+    "menu": {
+        "index": {
+            "label": "Apps",
+            "order": 15,
+            "keywords": [
+                {
+                    "matches": ["apps", "grafana", "metrics", "dashboard", "media", "plex", "qbittorrent", "av1ator", "upload"]
+                }
+            ]
+        }
+    }
+}

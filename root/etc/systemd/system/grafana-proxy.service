@@ -1,0 +1,8 @@
+[Unit]
+Description=Grafana on-demand proxy
+Requires=grafana.service grafana-proxy.socket
+After=grafana.service grafana-proxy.socket
+
+[Service]
+# A bin_t copy of systemd-socket-proxyd, see the Containerfile.
+ExecStart=/usr/local/sbin/grafana-socket-proxyd --exit-idle-time=15min 127.0.0.1:3001

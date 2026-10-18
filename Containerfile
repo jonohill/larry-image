@@ -69,6 +69,12 @@ RUN dnf install -y --setopt=install_weak_deps=False \
     && dnf clean all && \
     systemctl enable cockpit.socket
 
+# Grafana starts on the first connection to :3000. The proxy runs from a bin_t
+# copy because the shipped binary's SELinux domain can't bind or connect to
+# 3000-3001 (ntop_port_t).
+RUN install -m 0755 /usr/lib/systemd/systemd-socket-proxyd /usr/local/sbin/grafana-socket-proxyd && \
+    systemctl enable grafana-proxy.socket
+
 RUN dnf install -y greenboot && dnf clean all && \
     chmod 0755 /etc/greenboot/check/required.d/*.sh && \
     systemctl enable greenboot-healthcheck.service
@@ -77,7 +83,8 @@ RUN dnf install -y greenboot && dnf clean all && \
 # so nothing but the base system + tailscale starts. Run last so all layers
 # above are shared with the normal image.
 RUN if [ "$ENABLE_QUADLETS" != "1" ]; then \
-        rm -rf /usr/share/containers/systemd/* /usr/lib/bootc/bound-images.d/*; \
+        rm -rf /usr/share/containers/systemd/* /usr/lib/bootc/bound-images.d/* && \
+        systemctl disable grafana-proxy.socket; \
     fi
 
 ARG IMAGE_REVISION=unknown

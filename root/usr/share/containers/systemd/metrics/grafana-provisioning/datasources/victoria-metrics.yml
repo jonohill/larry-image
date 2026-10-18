@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: VictoriaMetrics
+    uid: victoria-metrics
+    type: prometheus
+    access: proxy
+    url: http://127.0.0.1:8428
+    isDefault: true
+    jsonData:
+      # Matches scrape.yml, so $__rate_interval spans at least two samples.
+      timeInterval: 30s

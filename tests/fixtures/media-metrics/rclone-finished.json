@@ -1,0 +1,1 @@
+{"updated_at": 1791800000.0, "state": "moving", "move": {"started_at": 1791799000.0, "stats": {"bytes": 2400000000, "checks": 1, "elapsedTime": 252.3, "errors": 0, "eta": null, "speed": 9510000.0, "totalBytes": 2400000000, "transfers": 1}}, "last_move": null}

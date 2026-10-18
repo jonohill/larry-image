@@ -1,0 +1,4 @@
+media_plex_added_timestamp_seconds{section="Films",show="",title="Example Film (2026)",rating_key="83019"} 1791683570
+media_plex_added_timestamp_seconds{section="Films",show="",title="No Year Film",rating_key="83001"} 1791600000
+media_plex_added_timestamp_seconds{section="TV shows",show="Example Show",title="S01E05 - Three Boys",rating_key="83032"} 1791842042
+media_plex_added_timestamp_seconds{section="TV shows",show="Another Show",title="Special",rating_key="75873"} 1700172201

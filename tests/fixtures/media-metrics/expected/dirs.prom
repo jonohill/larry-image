@@ -1,0 +1,10 @@
+media_file_size_bytes{stage="sorted",path="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 3398984313
+media_file_changed_timestamp_seconds{stage="sorted",path="TV Shows/Example Show/Season 01/Example Show - S01E05 - Three Boys.mkv"} 1791790000
+media_file_size_bytes{stage="sorted",path="Movies/Old (1999)/Old (1999).AVI"} 700000000
+media_file_changed_timestamp_seconds{stage="sorted",path="Movies/Old (1999)/Old (1999).AVI"} 1791780000
+media_stage_files{stage="sorted",kind="video"} 2
+media_stage_files{stage="sorted",kind="other"} 1
+media_stage_bytes{stage="sorted"} 4099028996
+media_stage_files{stage="plex",kind="video"} 0
+media_stage_files{stage="plex",kind="other"} 0
+media_stage_bytes{stage="plex"} 0
