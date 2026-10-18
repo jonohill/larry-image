@@ -37,6 +37,8 @@ RUN mkdir -p /etc/bootc-secrets && \
 RUN dnf install -y tailscale && dnf clean all && \
     systemctl enable tailscaled.service tailscale-up.service
 
+RUN systemctl enable host-firewall.service
+
 # configure bootc for logically bound images
 # (enables downloading on update of host image)
 RUN mkdir -p /usr/lib/bootc/bound-images.d && \

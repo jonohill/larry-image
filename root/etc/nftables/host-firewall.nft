@@ -1,0 +1,30 @@
+# Drops new inbound connections from the internet. Loaded by
+# host-firewall.service.
+#
+# Declaring then deleting the table makes reloading this file replace it.
+table inet host_firewall
+delete table inet host_firewall
+
+table inet host_firewall {
+    chain inbound {
+        # After conntrack (-200) and before podman's DNAT (-100), so ports
+        # published by containers are covered too. A filter on the input hook
+        # would miss them, because DNATed traffic is forwarded, not input.
+        type filter hook prerouting priority -150; policy accept;
+
+        # Interfaces are listed by exclusion, so a renamed or added NIC is
+        # dropped by default rather than left open.
+        iifname "lo" accept
+        iifname "tailscale0" accept
+        # Container traffic reaches the host on the podman bridges.
+        iifname "podman*" accept
+        iifname "veth*" accept
+
+        ct state established,related accept
+        meta l4proto { icmp, ipv6-icmp } accept
+        # Tailscale's direct connections from peers.
+        udp dport 41641 accept
+
+        ct state new counter drop
+    }
+}
