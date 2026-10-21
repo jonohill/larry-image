@@ -7,7 +7,7 @@ Requires=download-secrets.service
 StartLimitIntervalSec=0
 
 [Container]
-Image=docker.io/cloudflare/cloudflared:2026.10.2
+Image=docker.io/cloudflare/cloudflared:2026.10.3
 GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 # Image is logically bound, so bootc keeps it in the additional store above
 Pull=never
