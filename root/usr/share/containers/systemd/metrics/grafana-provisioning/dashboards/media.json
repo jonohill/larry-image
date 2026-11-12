@@ -1882,6 +1882,7 @@
         "defaults": {
           "custom": {
             "align": "auto",
+            "filterable": true,
             "cellOptions": {
               "type": "auto"
             }
